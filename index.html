@@ -68,5 +68,53 @@
 
         </table>
 
+        <hr>
+        <h3>Algorithms- Algebra</h3>
+        <blockquote> Numeric linear algebra, sometimes called applied linear algebra, is the study of how 
+            matrix operations can be used to create computer algorithms which efficiently and
+             accurately provide approximate answers to questions in continuous mathematics. 
+             It is a subfield of numerical analysis, and a type of linear algebra. 
+             mputers use floating-point arithmetic and cannot exactly represent irrational data, 
+             so when a computer algorithm is applied to a matrix of data, it can sometimes increase 
+             the difference between a number stored in the computer and the true number that it is an 
+             approximation of. Numerical linear algebra uses properties of vectors and matrices to 
+             develop computer algorithms that minimize the error introduced by the computer, and is 
+             also concerned with ensuring that the algorithm is as efficient as possible.</blockquote>
+             <a href="https://en.wikipedia.org/wiki/Numerical_linear_algebra">Link to Algebra</a>
+             <h4>Rank of a Matrix</h4>
+             <pre>
+                const double EPS = 1E-9;
+
+                int compute_rank(vector<vector<double>> A) {
+                    int n = A.size();
+                    int m = A[0].size();
+                
+                    int rank = 0;
+                    vector<bool> row_selected(n, false);
+                    for (int i = 0; i < m; ++i) {
+                        int j;
+                        for (j = 0; j < n; ++j) {
+                            if (!row_selected[j] && abs(A[j][i]) > EPS)
+                                break;
+                        }
+                
+                        if (j != n) {
+                            ++rank;
+                            row_selected[j] = true;
+                            for (int p = i + 1; p < m; ++p)
+                                A[j][p] /= A[j][i];
+                            for (int k = 0; k < n; ++k) {
+                                if (k != j && abs(A[k][i]) > EPS) {
+                                    for (int p = i + 1; p < m; ++p)
+                                        A[k][p] -= A[j][p] * A[k][i];
+                                }
+                            }
+                        }
+                    }
+                    return rank;
+                }
+                
+             </pre>
+             <a href="https://cp-algorithms.com/linear_algebra/rank-matrix.html">Link to Code</a>
     </head>
 </html>
